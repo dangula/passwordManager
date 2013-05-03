@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request
 from key import User
 from key import AesEncryption
+from key import AESDecryptionWrapper
 from persist import shelveWrapper
 
 import json
@@ -40,7 +41,7 @@ def addNewUser():
                 ret_data = {'msg' : msg}
                 return json.dumps(ret_data),200
             else :
-                ret_data = {'error' : {msg[0] : msg[1]} }
+                ret_data = {'error' : msg }
                 return json.dumps(ret_data),400
         else:
             raise Exception
@@ -90,7 +91,7 @@ def addPasswordInfo(user_name,password):
                     ret_data = {'msg' : msg}
                     return json.dumps(ret_data),200
                 else :
-                    ret_data = {'error' : {msg[0] : msg[1]} }
+                    ret_data = {'error' : msg }
                     return json.dumps(ret_data),400
             else:
                 raise Exception
@@ -110,7 +111,7 @@ def getPasswordInfo(user_name,password,name):
     if isinstance(user, User):
         passwordInfo = db.retriePasswdInfo(user_name, password, name)
         if isinstance(passwordInfo, AesEncryption):
-            return_data = {'result': 'found','phrase':passwordInfo.phrase,'name':passwordInfo.name,'password':passwordInfo.AESDecryptionWrapper(user.key,passwordInfo.chiperText)}
+            return_data = {'result': 'found','phrase':passwordInfo.phrase,'name':passwordInfo.name,'password':AESDecryptionWrapper(user.key,passwordInfo.chiperText)}
             return json.dumps(return_data),200
         else :
             return_data = {'result' : 'Not Found','msg' : 'No password found with key'+name}

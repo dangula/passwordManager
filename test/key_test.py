@@ -1,5 +1,6 @@
 from key import User
 from key import AesEncryption
+from key import AESDecryptionWrapper
 import unittest
 
 
@@ -25,7 +26,7 @@ class Test_keyClass(unittest.TestCase):
         self.assertEqual('Data1', encData.name, 'Check name');
         self.assertNotEquals('Password1', encData.chiperText, 'Check password')
         self.assertEquals(encData.AESEncryptionWrapper(user1.key, 'Password1'), encData.chiperText, 'Check Cipher Text')
-        self.assertEquals('Password1', encData.AESDecryptionWrapper(user1.key, encData.chiperText), 'Check Decrypted password')
+        self.assertEquals('Password1', AESDecryptionWrapper(user1.key, encData.chiperText), 'Check Decrypted password')
         self.assertEquals('None', encData.phrase, 'check phrase')
     
     def test_enc_basic2(self):
@@ -34,7 +35,7 @@ class Test_keyClass(unittest.TestCase):
         self.assertEqual('Data2', encData.name, 'Check name');
         self.assertNotEquals('hahah_23423_E94932_TEST_HG', encData.chiperText, 'Check password')
         self.assertEquals(encData.AESEncryptionWrapper(user1.key, 'hahah_23423_E94932_TEST_HG'), encData.chiperText, 'Check Cipher Text')
-        self.assertEquals('hahah_23423_E94932_TEST_HG', encData.AESDecryptionWrapper(user1.key, encData.chiperText), 'Check Decrypted password')
+        self.assertEquals('hahah_23423_E94932_TEST_HG', AESDecryptionWrapper(user1.key, encData.chiperText), 'Check Decrypted password')
         self.assertEquals('SOME PHRASE', encData.phrase, 'check phrase')
 
     
