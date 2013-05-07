@@ -44,7 +44,7 @@ class shelveWrapper(object):
                     s[userName] = User(userName, Password, Phrase)
                     return 'User Created Successfully'
             else:
-                return validateUserData   
+                return validateUserData
         except ValueExistsError, e:
             return "{'username': " + e.value+"}"
         finally:
@@ -66,13 +66,13 @@ class shelveWrapper(object):
                 else:
                     raise KeyError
             else:
-                raise KeyError          
+                raise KeyError
         except KeyError:
             return "User Data not found"
         finally:
             s.close()
 
-    def writeEncrytptionData(self, userName, password, Name, 
+    def writeEncrytptionData(self, userName, password, Name,
                              PlainText, Phrase):
         """
         Method to write a AesEncryption Object to shelve db
@@ -87,18 +87,18 @@ class shelveWrapper(object):
                 user = self.retriveUser(userName, password)
                 kList = s.keys()
                 if Name in kList:
-                    raise ValueExistsError        
+                    raise ValueExistsError
                 else:
-                    data = AesEncryption(user.username, user.key, Name, 
+                    data = AesEncryption(user.username, user.key, Name,
                                          PlainText, Phrase)
                     s[Name] = data
                     return 'Password Info created successfully'
             else:
-                return validatePasswordData       
+                return validatePasswordData
         except KeyError:
             return " No user found for username password combination"
         except ValueExistsError, e:
-            return "{'Name': "+e.value+"}"   
+            return "{'Name': "+e.value+"}"
         s.close()
 
     def retriePasswdInfo(self, UserName, Passwd, Name):
@@ -115,25 +115,25 @@ class shelveWrapper(object):
                 else:
                     raise KeyError
             else:
-                raise KeyError       
+                raise KeyError
         except KeyError:
-            return "No data Found"    
+            return "No data Found"
         s.close()
 
     def retrivePasswordInfo_NameSearch(self, UserName, Passwd, Name):
         s = shelve.open(self.shelveDB, 'r')
         try:
-            Userdata = s[UserName]       
+            Userdata = s[UserName]
             if Userdata.key == self.checkhashPasswd(str(Passwd)):
                 #s=
                 passInfo = s[Name]
                 return passInfo
             else:
-                raise KeyError      
+                raise KeyError
         except KeyError:
             return "No data Found"
 
-   
+
 class ValueExistsError(Exception):
     """
     This class defines user defined Exception when a user name
@@ -141,7 +141,7 @@ class ValueExistsError(Exception):
     """
     def __init__(self):
         self.value = 'Key Already Exists'
-    
+
     def __str__(self):
         return repr(self.value)
 
@@ -155,7 +155,7 @@ def validateUser(username, password, phrase):
     3. phrase length must be between 4 and 100
     4. phrase must be alpha only(spaces allowed)
     5. password length must be between 4 and 50
-    6. password must be alpha numeric , special chars 
+    6. password must be alpha numeric , special chars
        _ ,@ , #, $ and * are allowed
     7. password must pass check password validation
     """
@@ -175,9 +175,9 @@ def validateUser(username, password, phrase):
             else:
                 return "{'phrase': ' must be between 4 and 100 chars'}"
         else:
-            return "{'username': ' can only contain alphabets and digits'}"          
+            return "{'username': ' can only contain alphabets and digits'}"
     else:
-        return "{'username': ' must be between 4 an 50 chars'}"  
+        return "{'username': ' must be between 4 an 50 chars'}"
 
 
 def validatePasswordInfo(name, password, phrase):
@@ -188,7 +188,7 @@ def validatePasswordInfo(name, password, phrase):
     2. name must be alpha numeric only
     3. phrase length must be between 4 and 100
     4. phrase must be alpha only(spaces allowed)
-    5. password length must be at least 4 chars 
+    5. password length must be at least 4 chars
     6. password with only spaces is not allowed
 
     """
@@ -208,7 +208,7 @@ def validatePasswordInfo(name, password, phrase):
             return "{'name': ' can only contain alphabets and digits'}"
     else:
         return "{'name': ' must be between 4 an 50 chars'}"
-    
+
 
 def CheckPassword(password):
     """
@@ -223,7 +223,7 @@ def CheckPassword(password):
     score = 0
     if re.search('\d+', password):
         score = score + 1
-    if re.search('[a-z]', password): 
+    if re.search('[a-z]', password):
         score = score + 1
     if re.search('[A-Z]', password):
         score = score+1

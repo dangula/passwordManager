@@ -17,13 +17,13 @@ class User(object):
             shash.update(key + passwd + salt)
             key = shash.digest()
         return key
-  
+
     def __init__(self, uname, passwd, phrase='None'):
         self.username = uname
         self.key = self.hashPasswd(passwd)
         self.phrase = phrase
-    
-  
+
+
 class AesEncryption(User):
     """
     Class AesEncryption
@@ -33,19 +33,18 @@ class AesEncryption(User):
         iv = 'RP3CqI4GELO489WV'
         aesEncryptObj = AES.new(key, AES.MODE_CTR, counter=lambda: iv)
         return aesEncryptObj.encrypt(PlainText)
-  
+
     def __init__(self, userName, Key, Name, Text, phrase='None'):
         self.Id = userName
         self.name = Name
         self.phrase = phrase
         self.chiperText = self.AESEncryptionWrapper(Key, Text)
-    
-      
+
+
 def AESDecryptionWrapper(key, CipherText):
     """
     Helper method to decrypt a encryted string
     """
     iv = 'RP3CqI4GELO489WV'
     aesDecryptObj = AES.new(key, AES.MODE_CTR, counter=lambda: iv)
-    return aesDecryptObj.decrypt(CipherText)      
-    
+    return aesDecryptObj.decrypt(CipherText)
