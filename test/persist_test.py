@@ -1,4 +1,5 @@
 from persist import shelveWrapper
+from persist import CheckPassword
 from key import User
 from key import AESDecryptionWrapper
 
@@ -88,10 +89,32 @@ class persistTest(unittest.TestCase):
         self.assertEqual(msg3, "{'phrase': ' can only contain alphabets and digits(white space allowed'}")
         msg4= self.db.writeUser('Valid12User43', 'Password1', 'This is a valid phrase')
         self.assertEqual(msg4, "User Created Successfully")
+        
+    def testUserValidationPassword(self):
+        msg1 = self.db.writeUser("user", "passwd", "none")
+        self.assertEquals(msg1, "{'password': ' must be between 8 an 50 chars'}")
+        msg2 = self.db.writeUser("user", "password12password12password12password12password12password12", "none")
+        self.assertEquals(msg2, "{'password': ' must be between 8 an 50 chars'}")
+        msg3 = self.db.writeUser("user", "pass word", "none")
+        self.assertEquals(msg3, "{'password': ' can only contain alphabets,digits or special chars (_, @, #, $, *)'}")
+        msg4 = self.db.writeUser('user', 'Password', 'none')
+        self.assertEquals(msg4, "{'password ': ' must contain 3 of the following 4 - digits, lowercase, uppercase and special chars(_,@,*,#,$)}")
+        msg5 = self.db.writeUser("username", "pass_word", 'none')
+        self.assertEquals(msg5, "{'password ': ' must contain 3 of the following 4 - digits, lowercase, uppercase and special chars(_,@,*,#,$)}")
+        
+    def testPasswordInfoValication(self):
+        msg1 = self.db.writeEncrytptionData("fake", "Password1", "pas", "this is password", "none")
+        self.assertEqual(msg1, "{'name': ' must be between 4 an 50 chars'}")
+        msg2 = self.db.writeEncrytptionData("fake", "Password1", "pas wdName", "this is password", "none")
+        self.assertEqual(msg2, "{'name': ' can only contain alphabets and digits'}")
+        msg3 = self.db.writeEncrytptionData("fake", "Password1", "pasName", "th   s", "none")
+        self.assertEqual(msg3, "{'password': 'password length must be atlest 4(not counting white spaces)'}")
+        msg4 = self.db.writeEncrytptionData("fake", "Password1", "pasName", "thisPass", "no")
+        self.assertEqual(msg4, "{'phrase': ' must be between 4 an 100 chars'}")
+        msg5 = self.db.writeEncrytptionData("fake", "Password1", "pasName", "th   s", "none !")
+        self.assertEqual(msg5, "{'phrase': ' can only contain alphabets and digits(white space allowed'}")
 
-    #TODO - userValidation- password
-    # PasswordChecker
-    #PasswordInfo validation
+
         
         
 

@@ -85,6 +85,8 @@ class shelveWrapper(object):
                                                         Phrase)
             if validatePasswordData == 'success':
                 user = self.retriveUser(userName, password)
+                if user == 'User Data not found':
+                    raise KeyError
                 kList = s.keys()
                 if Name in kList:
                     raise ValueExistsError
@@ -96,7 +98,8 @@ class shelveWrapper(object):
             else:
                 return validatePasswordData
         except KeyError:
-            return " No user found for username password combination"
+            return ("{'error' : ' No user found for username"
+                    "password combination'}")
         except ValueExistsError, e:
             return "{'Name': "+e.value+"}"
         s.close()
@@ -167,11 +170,14 @@ def validateUser(username, password, phrase):
                         if re.match(PASSWORD_CHECK, password):
                             return CheckPassword(password)
                         else:
-                            return "{'password': ' can only contain alphabets,digits or special chars (_, @, #, $, *)'}"
+                            return ("{'password': ' can only contain"
+                                    " alphabets,digits or special chars"
+                                    " (_, @, #, $, *)'}")
                     else:
                         return "{'password': ' must be between 8 an 50 chars'}"
                 else:
-                    return "{'phrase': ' can only contain alphabets and digits(white space allowed'}"
+                    return ("{'phrase': ' can only contain alphabets and "
+                            "digits(white space allowed'}")
             else:
                 return "{'phrase': ' must be between 4 and 100 chars'}"
         else:
@@ -199,9 +205,11 @@ def validatePasswordInfo(name, password, phrase):
                     if len(password.replace(' ', '')) >= 4:
                         return 'success'
                     else:
-                        return"{'password': 'password length must be atlest 4(not counting white spaces)'}"
+                        return ("{'password': 'password length must be atlest"
+                                " 4(not counting white spaces)'}")
                 else:
-                    return {'phrase': ' can only contain alphabets and digits(white space allowed'}
+                    return ("{'phrase': ' can only contain alphabets and"
+                            " digits(white space allowed'}")
             else:
                 return "{'phrase': ' must be between 4 an 100 chars'}"
         else:
@@ -232,4 +240,5 @@ def CheckPassword(password):
     if score >= 3:
         return 'success'
     else:
-        return "{'password ': ' must contain 3 of the following 3 - digits, lowercase, uppercase and special chars(_,@,*,#,$)}"
+        return ("{'password ': ' must contain 3 of the following 4 - digits,"
+                " lowercase, uppercase and special chars(_,@,*,#,$)}")

@@ -36,7 +36,11 @@ def addNewUser():
                 else:
                     raise Exception
             if len(reqKeys) == 3:
-                if 'password' in reqKeys and 'username' in reqKeys and 'phrase' in reqKeys:
+                if (
+                        'password' in reqKeys and
+                        'username' in reqKeys and
+                        'phrase' in reqKeys
+                ):
                     msg = db.writeUser(UserDict['username'],
                                        UserDict['password'],
                                        UserDict['phrase'])
@@ -90,7 +94,11 @@ def addPasswordInfo(user_name, password):
                     else:
                         raise Exception
                 if len(reqKeys) == 3:
-                    if 'name' in reqKeys and 'password' in reqKeys and 'phrase' in reqKeys:
+                    if (
+                            'name' in reqKeys and
+                            'password' in reqKeys and
+                            'phrase' in reqKeys
+                    ):
                         msg = db.writeEncrytptionData(user_name,
                                                       password,
                                                       UserDict['name'],
@@ -122,10 +130,11 @@ def getPasswordInfo(user_name, password, name):
     if isinstance(user, User):
         passwordInfo = db.retriePasswdInfo(user_name, password, name)
         if isinstance(passwordInfo, AesEncryption):
+            passwd = AESDecryptionWrapper(user.key,
+                                          passwordInfo.chiperText)
             return_data = {'result': 'found', 'phrase': passwordInfo.phrase,
                            'name': passwordInfo.name,
-                           'password': AESDecryptionWrapper(user.key,
-                                                            passwordInfo.chiperText)}
+                           'password': passwd}
             return jsonify(return_data), 200
         else:
             return_data = {'result': 'Not Found',
