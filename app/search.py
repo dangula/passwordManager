@@ -25,7 +25,7 @@ def writeQ(queue, dbObj, userName):
     if block:
         pass
 
-    
+
 def readQ(queue, searchKey, searchString, RESULT_LIST):
     if queue.empty():
         block = True
@@ -40,8 +40,8 @@ def readQ(queue, searchKey, searchString, RESULT_LIST):
                 RESULT_LIST.append(CheckObj) 
         if searchKey == 'phrase':
             if searchString in CheckObj.phrase:
-                RESULT_LIST.append(CheckObj)   
-    
+                RESULT_LIST.append(CheckObj)
+
 
 def writer(queue, loops,KeyList,dbHandle,userName,searchKey,searchString,RESULT_LIST):
     for keys in KeyList:
