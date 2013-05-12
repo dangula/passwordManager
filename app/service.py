@@ -150,6 +150,9 @@ def getPasswordInfo(user_name, password, name):
            '<name>/<search>', methods={'GET'})
 def searchPasswordInfo(user_name, password, name, search):
     if name == 'name' or name == 'phrase':
+        if len(search) <= 2:
+            return_data = {'Error': ' search string is too short'}
+            return jsonify(return_data), 400
         search_result = doSearch(STORE_DB, user_name, password, name, search)
         return jsonify(resut=search_result), 200
     else:
