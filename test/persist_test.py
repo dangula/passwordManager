@@ -1,5 +1,4 @@
 from persist import shelveWrapper
-from persist import CheckPassword
 from key import User
 from key import AESDecryptionWrapper
 

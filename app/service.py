@@ -7,6 +7,7 @@ from key import AESDecryptionWrapper
 from persist import shelveWrapper
 
 import json
+from search import doSearch
 
 app = Flask(__name__)
 STORE_DB = 'passwordStore.db'
@@ -144,6 +145,14 @@ def getPasswordInfo(user_name, password, name):
         return_data = {'Error': {'msg': 'Invalid User info passed'}}
         return jsonify(return_data), 404
 
-
+@app.route('/searchPasswordInfo/<user_name>/<password>/<name>/<search>', methods={'GET'})
+def searchPasswordInfo(user_name,password,name,search):
+    if name == 'name' or name == 'phrase':
+        search_result = doSearch(STORE_DB,user_name,password,name,search)
+        return jsonify(resut=search_result), 200
+    else:
+        return_data ={'Error': 'invalid search key'}
+        return jsonify(return_data), 400
+    
 if __name__ == '__main__':
     app.run(debug=True)
