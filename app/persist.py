@@ -164,7 +164,8 @@ def validateUser(username, password, phrase):
     """
     if len(username) >= 4 and len(username) <= 50:
         if re.match(ALPHA_NUM_PATTERN, username):
-            if len(phrase) >= 4 and len(phrase) <= 100:
+            if (len(phrase.replace(' ', '')) >= 4 and
+               len(phrase.replace(' ', '')) <= 100):
                 if re.match(PHRASE_PATTERN, phrase):
                     if len(password) >= 8 and len(password) <= 50:
                         if re.match(PASSWORD_CHECK, password):
@@ -179,7 +180,8 @@ def validateUser(username, password, phrase):
                     return ("{'phrase': ' can only contain alphabets and "
                             "digits(white space allowed'}")
             else:
-                return "{'phrase': ' must be between 4 and 100 chars'}"
+                return ("{'phrase': ' must be between 4 and "
+                        "100 chars(excluding spaces)'}")
         else:
             return "{'username': ' can only contain alphabets and digits'}"
     else:
@@ -200,7 +202,8 @@ def validatePasswordInfo(name, password, phrase):
     """
     if len(name) >= 4 and len(name) <= 50:
         if re.match(ALPHA_NUM_PATTERN, name):
-            if len(phrase) >= 4 and len(phrase) <= 50:
+            if (len(phrase.replace(' ', '')) >= 4 and
+               len(phrase.replace(' ', '')) <= 50):
                 if re.match(PHRASE_PATTERN, phrase):
                     if len(password.replace(' ', '')) >= 4:
                         return 'success'
@@ -211,7 +214,8 @@ def validatePasswordInfo(name, password, phrase):
                     return ("{'phrase': ' can only contain alphabets and"
                             " digits(white space allowed'}")
             else:
-                return "{'phrase': ' must be between 4 an 100 chars'}"
+                return ("{'phrase': ' must be between 4 and 100 "
+                        "chars(excluding spaces)'}")
         else:
             return "{'name': ' can only contain alphabets and digits'}"
     else:
