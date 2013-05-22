@@ -23,15 +23,30 @@ Then start the service.py file as flask app or deploy service.py(with supporting
  Example             | http://localhost:5000/  |
  --- | --- |
  Exected result      | '200 OK if service up   |
- Expected Result JSON|{'status': 'Service Up'}'|
+ Expected Result JSON|```{'status': 'Service Up'}```|
  
 
 ##### 2. Add new User - POST /addUser
-
- Example        | TODO  |
+ Expected JSON for following format
+ ```json
+  {'username' : 'someUserName',
+   'password' : 'Some_Password',
+   'phrase'   : 'some optional phrase'
+   }
+ 
+ ```
+ Example        | http://localhost:5000/addUser (with User json in body)  |
  --- | --- |
- Exected result | TODO   |
-TODO - Additional Info
+ Exected result | 200 OK if user is created successfully   |
+ |400 Bad Request with matching Error message if user is not created successfully |
+
+ For a user to be created/added successfully if following rules are qualified
+    1. UserName must be unique, if a userName already exists then 400 Bad Request is returned
+       with Error message ``` {'username' : 'Key already exists'}```
+    2. The json send in the requst must be valid and must pass user validation
+        * user josn must have atlest username and password, if not 400 Bad Requst is returned
+          with error message ``` {'error': 'Invalid Data'}```
+    TODO - add more
 
 ##### 3. Retrive user - GET /getUser/\<user_name\>/\<password\>
 
