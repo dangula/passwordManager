@@ -164,8 +164,7 @@ def validateUser(username, password, phrase):
     """
     if len(username) >= 4 and len(username) <= 50:
         if re.match(ALPHA_NUM_PATTERN, username):
-            if (len(phrase.replace(' ', '')) >= 4 and
-               len(phrase.replace(' ', '')) <= 100):
+            if len(phrase.replace(' ', '')) >= 4 and len(phrase) <= 100:
                 if re.match(PHRASE_PATTERN, phrase):
                     if len(password) >= 8 and len(password) <= 50:
                         if re.match(PASSWORD_CHECK, password):
@@ -202,8 +201,7 @@ def validatePasswordInfo(name, password, phrase):
     """
     if len(name) >= 4 and len(name) <= 50:
         if re.match(ALPHA_NUM_PATTERN, name):
-            if (len(phrase.replace(' ', '')) >= 4 and
-               len(phrase.replace(' ', '')) <= 50):
+            if len(phrase.replace(' ', '')) >= 4 and len(phrase) <= 50:
                 if re.match(PHRASE_PATTERN, phrase):
                     if len(password.replace(' ', '')) >= 4:
                         return 'success'
