@@ -27,7 +27,7 @@ Then start the service.py file as flask app or deploy service.py(with supporting
  
 
 ##### 2. Add new User - POST /addUser
- Expected JSON for following format
+ Expected JSON for following format in the body of request
  ```json
   {'username' : 'someUserName',
    'password' : 'Some_Password',
@@ -72,10 +72,19 @@ Then start the service.py file as flask app or deploy service.py(with supporting
 ##### 3. Retrive user - GET /getUser/\<user_name\>/\<password\>
 
 
-Example        | TODO  |
+Example        | http://localhost:5000/getUser/user1/Password1  |
  --- | --- |
- Exected result | TODO   |
-TODO - Additional Info
+ Exected result | 200 OK - if user exists name and password from URL |
+ |404 Not Found - if user doesnt exist|
+ 1. For a 200 OK response the user JSON is retrned in body of resposne
+    the user json contains the Phrase stored on user, username and password is not returned.
+    eg : ``` JSON
+            {'result': 'found',
+              'phrase' : 'User1 info'}```
+ 2. 404 Not found is returned if there is no user with the Username in the URL, or 
+    The user exists but password is incorrect. appropritae message is retrned too.
+    eg.```{'result': 'Not found','msg' : 'User data not found'} ```
+
 
 ##### 4. Add passwordInfo - POST /addpassword/\<user_name\>/\<password\>
 
