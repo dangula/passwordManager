@@ -17,4 +17,48 @@ Project for Python cert class
 Then start the service.py file as flask app or deploy service.py(with supporting files) to a service like apache or nginix
 
 ## REST API
- TODO
+###### Following REST calls can be made to password Manager app
+##### 1. Check service Up - GET /
+ 
+ Example             | http://localhost:5000/  |
+ --- | --- |
+ Exected result      | '200 OK if service up   |
+ Expected Result JSON|{'status': 'Service Up'}'|
+ 
+
+##### 2. Add new User - POST /addUser
+
+ Example        | TODO  |
+ --- | --- |
+ Exected result | TODO   |
+TODO - Additional Info
+
+##### 3. Retrive user - GET /getUser/\<user_name\>/\<password\>
+
+
+Example        | TODO  |
+ --- | --- |
+ Exected result | TODO   |
+TODO - Additional Info
+
+##### 4. Add passwordInfo - POST /addpassword/\<user_name\>/\<password\>
+
+
+|Example        | TODO  |
+ --- | --- |
+ Exected result | TODO   |
+TODO - Additional Info
+
+##### 5. Retrive passwordInfo - GET /getPasswordInfo/\<user_name\>/\<password\>/\<name\>
+
+Example        | TODO  |
+ --- | --- |
+ Exected result | TODO   |
+TODO - Additional Info
+
+##### 6. searh passwrodInfo - GET /searchPasswordInfo/\<user_name\>/\<password\>/\<name\>/\<search\>
+
+Example        | TODO  |
+ --- | --- |
+ Exected result | TODO   |
+TODO - Additional Info
