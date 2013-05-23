@@ -65,7 +65,7 @@ Then start the service.py file as flask app or deploy service.py(with supporting
          eg : ```{'error': {'password': ' must be between 8 an 50 chars'}}```
     3. phrase validation
        * phrase length must be between 4 and 100 chars
-       * phrase  must be alpha numberic only
+       * phrase  must be alpha numberic with spaces allowed
        * If phrase validation fails, 400 Bad Request is retruned with appropriate error
          eg : ```{'error': {'phrase': ' must be between 4 an 100 chars'}} ```
 
@@ -110,7 +110,23 @@ Expected JSON of following format in the body of request
   3. The json send in the requst must be valid and must pass password validation
      * passwordInfo josn must have atlest name  and password, if not 400 Bad Requst is returned
        with error message ``` {'error': 'Invalid Data'}```
-
+  4. Following are passwordInfo validation rules
+    1. Name validation
+       * name length must be between 4 and 50 chars
+       * name must be alpha numberic only
+       * If username validation fails, 400 Bad Request is retruned with appropriate error
+         eg : ```{'error': {'name': ' can only contain alphabets and digits'}} ```
+    2. password validation
+       * password length must be atleast 4 chars exluding spaces
+       * password can contain any ascii char inluding space
+       * If password validation fails, 400 Bad Request is returned with appropriate error
+         eg : ```{'error': {'password': ' length must be atlest 4 chars'}}```
+    3. phrase validation
+       * phrase length must be between 4 and 50 chars
+       * phrase  must be alpha numberic, spaces are allowed
+       * If phrase validation fails, 400 Bad Request is retruned with appropriate error
+         eg : ```{'error': {'phrase': ' must be between 4 an 50 chars'}} ```
+  
 
 ##### 5. Retrive passwordInfo - GET /getPasswordInfo/\<user_name\>/\<password\>/\<name\>
 
