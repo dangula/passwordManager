@@ -18,7 +18,7 @@ Then start the service.py file as flask app or deploy service.py(with supporting
 
 ## REST API
 ###### Following REST calls can be made to password Manager app
-##### 1. Check service Up - GET /
+#### 1. Check service Up - GET /
  
  Example             | http://localhost:5000/  |
  --- | --- |
@@ -26,7 +26,7 @@ Then start the service.py file as flask app or deploy service.py(with supporting
  Expected Result JSON|```{'status': 'Service Up'}```|
  
 
-##### 2. Add new User - POST /addUser
+#### 2. Add new User - POST /addUser
  Expected JSON of following format in the body of request
  ```json
   {'username' : 'someUserName',
@@ -69,7 +69,7 @@ Then start the service.py file as flask app or deploy service.py(with supporting
        * If phrase validation fails, 400 Bad Request is retruned with appropriate error
          eg : ```{'error': {'phrase': ' must be between 4 an 100 chars'}} ```
 
-##### 3. Retrive user - GET /getUser/\<user_name\>/\<password\>
+#### 3. Retrive user - GET /getUser/\<user_name\>/\<password\>
 
 
 Example        | http://localhost:5000/getUser/user1/Password1  |
@@ -86,7 +86,7 @@ Example        | http://localhost:5000/getUser/user1/Password1  |
     eg.```{'result': 'Not found','msg' : 'User data not found'} ```
 
 
-##### 4. Add passwordInfo - POST /addPassword/\<user_name\>/\<password\>
+#### 4. Add passwordInfo - POST /addPassword/\<user_name\>/\<password\>
 Expected JSON of following format in the body of request
  ```json
   {'name' : 'passwordName1',
@@ -128,14 +128,25 @@ Expected JSON of following format in the body of request
          eg : ```{'error': {'phrase': ' must be between 4 an 50 chars'}} ```
   
 
-##### 5. Retrive passwordInfo - GET /getPasswordInfo/\<user_name\>/\<password\>/\<name\>
+#### 5. Retrive passwordInfo - GET /getPasswordInfo/\<user_name\>/\<password\>/\<name\>
 
-Example        | TODO  |
+Example        | http://localhost:5000/getPassword/user1/Password1/data1  |
  --- | --- |
- Exected result | TODO   |
-TODO - Additional Info
+ Exected result | 200 OK - if password exists name for username and password URL |
+ |404 Not Found - if password doesnt exist|
+ |400 Bad Request - if username and/or passwowd is incorrect|
+ 1. For a 200 OK response the password JSON is retrned in body of resposne
+    the passwrod json contains the passwordName, decryted password and phrase.
+    eg : ``` JSON
+            {'name': 'data1',
+             'password': 'some password',
+             'phrase' : 'password for data 1'}```
+ 2. 404 Not found is returned if there is no password with the name in the URL with following 
+    error message```{'result': 'Not found','msg' : 'no pasword found with key'} ```
+ 3. 400 Bad Request is returned if username and/or password in URL is invaid, ie. no user
+    exists with data in URL,following error message is returned ```{'error': {'msg': invalid uer info passed'}} ```
 
-##### 6. searh passwrodInfo - GET /searchPasswordInfo/\<user_name\>/\<password\>/\<name\>/\<search\>
+#### 6. searh passwrodInfo - GET /searchPasswordInfo/\<user_name\>/\<password\>/\<name\>/\<search\>
 
 Example        | TODO  |
  --- | --- |
