@@ -162,4 +162,3 @@ Example        | http://localhost:5000/getPassword/user1/Password1/name/data1  |
     ``` {'Result': 'No Data Found with search criteria'} ``` 
  5. If passwordInfos are found with search criteria then 200 Ok is retruend with a JSON ARRAY of all the passwords
  
- 5. 
