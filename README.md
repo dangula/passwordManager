@@ -78,7 +78,7 @@ Example        | http://localhost:5000/getUser/user1/Password1  |
  |404 Not Found - if user doesnt exist|
  1. For a 200 OK response the user JSON is retrned in body of resposne
     the user json contains the Phrase stored on user, username and password is not returned.
-    eg : ``` JSON
+    eg : ``` 
             {'result': 'found',
               'phrase' : 'User1 info'}```
  2. 404 Not found is returned if there is no user with the Username in the URL, or 
@@ -137,7 +137,7 @@ Example        | http://localhost:5000/getPassword/user1/Password1/data1  |
  |400 Bad Request - if username and/or passwowd is incorrect|
  1. For a 200 OK response the password JSON is retrned in body of resposne
     the passwrod json contains the passwordName, decryted password and phrase.
-    eg : ``` JSON
+    eg : ``` 
             {'name': 'data1',
              'password': 'some password',
              'phrase' : 'password for data 1'}```
