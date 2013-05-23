@@ -27,7 +27,7 @@ Then start the service.py file as flask app or deploy service.py(with supporting
  
 
 ##### 2. Add new User - POST /addUser
- Expected JSON for following format in the body of request
+ Expected JSON of following format in the body of request
  ```json
   {'username' : 'someUserName',
    'password' : 'Some_Password',
@@ -40,7 +40,7 @@ Then start the service.py file as flask app or deploy service.py(with supporting
  Exected result | 200 OK if user is created successfully   |
  |400 Bad Request with matching Error message if user is not created successfully |
 
-  For a user to be created/added successfully if following rules are qualified
+  Following are the rules for new user to be added/created.
   
   1. UserName must be unique, if a userName already exists then 400 Bad Request is returned
        with Error message ``` {'username' : 'Key already exists'}```      
@@ -86,13 +86,31 @@ Example        | http://localhost:5000/getUser/user1/Password1  |
     eg.```{'result': 'Not found','msg' : 'User data not found'} ```
 
 
-##### 4. Add passwordInfo - POST /addpassword/\<user_name\>/\<password\>
-
-
-|Example        | TODO  |
+##### 4. Add passwordInfo - POST /addPassword/\<user_name\>/\<password\>
+Expected JSON of following format in the body of request
+ ```json
+  {'name' : 'passwordName1',
+   'password' : 'some password',
+   'phrase'   : 'shome phrase 1'
+   }
+ 
+ ```
+ Example        | http://localhost:5000/addPassword/User1/Password1 (with password json in body)  |
  --- | --- |
- Exected result | TODO   |
-TODO - Additional Info
+ Exected result | 200 OK if password is created successfully   |
+ |400 Bad Request with matching Error message if password is not created successfully |
+ 
+ Following are the rules for new password to be added/created.
+  
+  1. password name name must be unique, if a name  already exists then 400 Bad Request is returned
+       with Error message ``` {'name ' : 'Key already exists'}```  
+  2. There must be an existing user with matchign userName and password from URL. If there is no user
+     with username or password in URL is incorrect then 400 Bad Request is returned with Error 
+     messgae ```{'error' : 'No user found for usernamepassword combination'} ```
+  3. The json send in the requst must be valid and must pass password validation
+     * passwordInfo josn must have atlest name  and password, if not 400 Bad Requst is returned
+       with error message ``` {'error': 'Invalid Data'}```
+
 
 ##### 5. Retrive passwordInfo - GET /getPasswordInfo/\<user_name\>/\<password\>/\<name\>
 
