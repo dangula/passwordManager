@@ -146,9 +146,20 @@ Example        | http://localhost:5000/getPassword/user1/Password1/data1  |
  3. 400 Bad Request is returned if username and/or password in URL is invaid, ie. no user
     exists with data in URL,following error message is returned ```{'error': {'msg': invalid uer info passed'}} ```
 
-#### 6. searh passwrodInfo - GET /searchPasswordInfo/\<user_name\>/\<password\>/\<name\>/\<search\>
+#### 6. searh passwrodInfo - GET /searchPasswordInfo/\<user_name\>/\<password\>/\<searchKey\>/\<searchName\>
 
-Example        | TODO  |
+Example        | http://localhost:5000/getPassword/user1/Password1/name/data1  |
  --- | --- |
- Exected result | TODO   |
-TODO - Additional Info
+ Exected result | 200 OK - if there is atlest one paswordInfo with search criteria |
+ |400 Bad Request - if username and/or passwowd is incorrect|
+ |400 Bad Request - if search Key is invalid|
+ 1. Like getPassword call, if username and/or password in URL is incorrect, then 400 Bad request is returned
+ 2. Allowed searchKeys are 'name' or 'phrase', if key doenst match allowed searchKeys then 400 Bad Request
+    is returned with error message ```{'Error': 'invalid search key'} ```
+ 3. The searchName must be atlest 2 chars, if not 400 Bad Request is retruend with error message
+    ```{'Error': ' search string is too short'} ```
+ 4. If no passwordInfos are found with search criteria then 200 OK is retruend with following JSON
+    ``` {'Result': 'No Data Found with search criteria'} ``` 
+ 5. If passwordInfos are found with search criteria then 200 Ok is retruend with a JSON ARRAY of all the passwords
+ 
+ 5. 
